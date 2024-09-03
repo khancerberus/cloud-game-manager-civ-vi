@@ -1,0 +1,28 @@
+---
+/**
+ * @type value {{ [key: string]: string | number }[]}
+ */
+const { value } = Astro.props
+---
+
+<div>
+    <table>
+        <thead>
+            <tr>
+                {Object.keys(value[0]).map((key) => <th>{key}</th>)}
+            </tr>
+        </thead>
+
+        <tbody>
+            {
+                value.map((row: any) => (
+                    <tr>
+                        {Object.values(row).map((value) => (
+                            <td>{value}</td>
+                        ))}
+                    </tr>
+                ))
+            }
+        </tbody>
+    </table>
+</div>
