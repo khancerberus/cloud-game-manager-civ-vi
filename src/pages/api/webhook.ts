@@ -5,7 +5,7 @@ import { Player } from '@/models/player'
 import type { APIRoute } from 'astro'
 
 const DS_WEBHOOK_URL = import.meta.env.DS_WEBHOOK_URL ?? ''
-const HOST = import.meta.env.HOST ?? ''
+const HOST = import.meta.env.PUBLIC_HOST ?? ''
 
 // export const GET: APIRoute = async () => {
 //     await Player.sync()
