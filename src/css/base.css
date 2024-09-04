@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    color: white;
+}
+
+h1 {
+    @apply text-8xl;
+}
+
+h2 {
+    @apply text-6xl;
+}
+
+h3 {
+    @apply text-4xl;
+}
+
+h4 {
+    @apply text-2xl;
+}
+
+h5 {
+    @apply text-xl;
+}
+
+h6 {
+    @apply text-lg;
+}
+
+p {
+    @apply text-base;
+}
+
+input {
+    @apply bg-slate-700 text-white px-1;
+}

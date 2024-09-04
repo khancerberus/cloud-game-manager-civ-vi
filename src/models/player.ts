@@ -1,19 +1,21 @@
 import { sequelize } from '@/lib/sequelize'
-import type { IPlayer } from '@/types/player'
+import type { IPlayerModel } from '@/types/player'
 import { DataTypes } from 'sequelize'
 
-export const Player = sequelize.define<IPlayer>('PLAYER', {
-    playerId: {
-        type: DataTypes.UUIDV4,
+export const Player = sequelize.define<IPlayerModel>('player', {
+    id: {
+        type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true
     },
-    playerName: {
+    name: {
         type: DataTypes.STRING,
         allowNull: false
     },
     discordId: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.STRING,
         allowNull: false
     }
+}, {
+    tableName: 'PLAYER'
 })

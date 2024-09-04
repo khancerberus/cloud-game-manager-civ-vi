@@ -2,9 +2,10 @@ import { sequelize } from '@/lib/sequelize'
 import { Game } from './game'
 import { Player } from './player'
 
-export const GamePlayer = sequelize.define('GAME_PLAYER', {
+export const GamePlayer = sequelize.define('gamePlayer', {
 }, {
-    timestamps: false
+    timestamps: false,
+    tableName: 'GAME_PLAYER'
 })
 
 Game.belongsToMany(Player, { through: GamePlayer })

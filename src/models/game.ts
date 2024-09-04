@@ -1,9 +1,15 @@
 import { sequelize } from '@/lib/sequelize'
 import type { IGame } from '@/types/game'
 import { DataTypes } from 'sequelize'
+import { Player } from './player'
 
-export const Game = sequelize.define<IGame>('GAME', {
-    gameName: {
+export const Game = sequelize.define<IGame>('game', {
+    id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true
+    },
+    name: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -23,4 +29,8 @@ export const Game = sequelize.define<IGame>('GAME', {
         type: DataTypes.BOOLEAN,
         allowNull: false
     }
+}, {
+    tableName: 'GAME'
 })
+
+Game.belongsTo(Player, { foreignKey: 'currentPlayerId' })

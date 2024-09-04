@@ -23,25 +23,17 @@ const games = [
 ---
 
 <Layout title="Welcome to Astro.">
-    <main>
-        <h1>
-            Cloud Game Manager <span class="text-gradient">Civilizations VI</span>
-        </h1>
+    <main class="flex flex-col justify-center px-5">
+        <header class="flex flex-col justify-center items-center p-5">
+            <h1 class="font-bold">Cloud Game Manager</h1>
+            <h2 class="font-bold text-gradient">Civilizations VI</h2>
+        </header>
 
         <Table value={games} />
     </main>
 </Layout>
 
 <style>
-    main {
-        margin: auto;
-        padding: 1rem;
-        width: 800px;
-        max-width: calc(100% - 2rem);
-        color: white;
-        font-size: 20px;
-        line-height: 1.6;
-    }
     .astro-a {
         position: absolute;
         top: -32px;
@@ -50,13 +42,6 @@ const games = [
         width: 220px;
         height: auto;
         z-index: -1;
-    }
-    h1 {
-        font-size: 4rem;
-        font-weight: 700;
-        line-height: 1;
-        text-align: center;
-        margin-bottom: 1em;
     }
     .text-gradient {
         background-image: var(--accent-gradient);
