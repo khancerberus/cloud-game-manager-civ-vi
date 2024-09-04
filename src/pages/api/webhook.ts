@@ -1,5 +1,3 @@
-export const prerender = false
-
 // import { sequelize } from '@/lib/sequelize'
 import { Game } from '@/models/game'
 import { GamePlayer } from '@/models/gamePlayer'

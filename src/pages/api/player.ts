@@ -1,5 +1,3 @@
-export const prerender = false
-
 import { Player } from '@/models/player'
 import type { APIRoute } from 'astro'
 

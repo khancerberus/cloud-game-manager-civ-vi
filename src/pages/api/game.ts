@@ -1,5 +1,3 @@
-export const prerender = false
-
 import { Game } from '@/models/game'
 import type { APIRoute } from 'astro'
 
