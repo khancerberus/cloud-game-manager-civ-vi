@@ -1,7 +1,7 @@
 import { usePlayerStore } from '@/stores/player'
 import { useEffect } from 'react'
 
-const HOST = import.meta.env.HOST
+const HOST = import.meta.env.PUBLIC_HOST
 const apiUrl = new URL(HOST)
 apiUrl.pathname = '/api/player'
 
