@@ -2,6 +2,8 @@ import { usePlayerStore } from '@/stores/player'
 import { useEffect } from 'react'
 
 const HOST = import.meta.env.HOST
+const apiUrl = new URL(HOST)
+apiUrl.pathname = '/api/player'
 
 export const PlayerList = () => {
     const players = usePlayerStore((state) => state.players)
@@ -9,7 +11,7 @@ export const PlayerList = () => {
 
     useEffect(() => {
         const loadPlayers = async () => {
-            const response = await fetch(`${HOST}/api/player`)
+            const response = await fetch(apiUrl)
             const playersFetched = await response.json()
             console.log(playersFetched)
             setPlayers(playersFetched)
