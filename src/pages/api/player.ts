@@ -2,7 +2,9 @@ import { Player } from '@/models/player'
 import type { APIRoute } from 'astro'
 
 export const GET: APIRoute = async () => {
-    const players = await Player.findAll()
+    const players = await Player.findAll().catch((error) => {
+        return []
+    })
 
     return new Response(JSON.stringify(players), {
         headers: {

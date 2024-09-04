@@ -2,8 +2,6 @@ import { usePlayerStore } from '@/stores/player'
 import { useEffect } from 'react'
 
 const HOST = import.meta.env.PUBLIC_HOST
-const apiUrl = new URL(HOST)
-apiUrl.pathname = '/api/player'
 
 export const PlayerList = () => {
     const players = usePlayerStore((state) => state.players)
@@ -11,6 +9,9 @@ export const PlayerList = () => {
 
     useEffect(() => {
         const loadPlayers = async () => {
+            const apiUrl = new URL(HOST)
+            apiUrl.pathname = '/api/player'
+
             const response = await fetch(apiUrl)
             const playersFetched = await response.json()
             console.log(playersFetched)
@@ -33,8 +34,8 @@ export const PlayerList = () => {
                             😔 No hay jugadores registrados
                         </li>
                     ))}
-                {players.map((player) => (
-                    <li className="flex border border-slate-500 rounded-lg px-4">
+                {players.map((player, idx) => (
+                    <li key={idx} className="flex border border-slate-500 rounded-lg px-4">
                         ✅ {player.name} - {player.discordId}
                     </li>
                 ))}
