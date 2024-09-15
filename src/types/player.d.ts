@@ -8,9 +8,9 @@ import type {
 import type { IGame } from './game'
 
 export interface IPlayer {
-    id?: string
+    id: CreationOptional<string>
     name: string
-    discordId: string
+    discordId?: string
 
     games?: NonAttribute<IGame[]>
 }
