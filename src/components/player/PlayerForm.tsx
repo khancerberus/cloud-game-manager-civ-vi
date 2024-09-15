@@ -8,7 +8,7 @@ export const PlayerForm = () => {
     const [player, setPlayer] = useState<IPlayer>({
         name: '',
         discordId: ''
-    })
+    } as IPlayer)
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPlayer((prev) => ({
@@ -51,7 +51,7 @@ export const PlayerForm = () => {
                         setPlayer({
                             name: '',
                             discordId: ''
-                        })
+                        } as IPlayer)
                     }}
                 >
                     Agregar

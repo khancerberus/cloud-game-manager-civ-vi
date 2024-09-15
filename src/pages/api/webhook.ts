@@ -94,21 +94,21 @@ export const POST: APIRoute = async ({ request }) => {
                 await gamePlayer.save()
             }
 
-            // playerName = player ? `<@${player.discordId}>` : playerName
-            // const addPlayerLink = player ? '' : `[\[Añadir\]](<${HOST}/player>)`
+            playerName = player ? `<@${player.discordId}>` : playerName
+            const addPlayerLink = player ? '' : `[\[Añadir\]](<${HOST}/player>)`
 
-            // await fetch(DS_WEBHOOK_URL, {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify({
-            //         content: `# Turno #${playerTurn}\n\n` +
-            //                  `Jugador: **${playerName}** ${addPlayerLink}\n` +
-            //                  `Juego: **${gameName}**\n\n` +
-            //                  `> [Más Información](<${HOST}>)`
-            //     })
-            // })
+            await fetch(DS_WEBHOOK_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    content: `# Turno #${playerTurn}\n\n` +
+                             `Jugador: **${playerName}** ${addPlayerLink}\n` +
+                             `Juego: **${gameName}**\n\n` +
+                             `> [Más Información](<${HOST}>)`
+                })
+            })
 
             return new Response(
                 JSON.stringify({
