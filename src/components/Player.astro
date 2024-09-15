@@ -1,0 +1,24 @@
+---
+import type { IPlayer } from '@/types/player'
+
+const { player } = Astro.props as { player: IPlayer }
+---
+
+<article class="flex flex-col border border-white rounded-md px-4 py-2">
+    <h3>{player.name}</h3>
+    <p>
+        Discord ID: <span>{player?.discordId}</span>
+    </p>
+
+    <details class="bg-red-600">
+        <summary>Juegos activos ({player.games?.length})</summary>
+
+        <div>
+            <ul>
+                {player?.games?.map?.((game) => {
+                    return <li>{game.name}</li>
+                })}
+            </ul>
+        </div>
+    </details>
+</article>

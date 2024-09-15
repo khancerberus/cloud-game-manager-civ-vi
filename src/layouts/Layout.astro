@@ -20,17 +20,13 @@ const { title } = Astro.props
         <title>{title}</title>
 		<ViewTransitions />
     </head>
-    <body>
-        <header class="flex bg-slate-800 h-14 items-center px-10">
+    <body class="flex flex-col w-screen h-screen">
+        <header class="flex bg-slate-800 h-14 items-center px-10 w-full">
             <nav>
-                <ul class="flex gap-2 font-medium">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-                    <li>
-                        <a href="/player">Players</a>
-                    </li>
-                </ul>
+                <div class="flex gap-2 font-medium">
+                    <a class="hover:bg-slate-700 py-2 px-4 transition-colors duration-300" href="/">Inicio</a>
+                    <a class="hover:bg-slate-700 py-2 px-4 transition-colors duration-300" href="/players">Jugadores</a>
+                </div>
             </nav>
         </header>
         <slot />

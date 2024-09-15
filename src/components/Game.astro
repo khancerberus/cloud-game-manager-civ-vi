@@ -1,0 +1,17 @@
+---
+import '@github/relative-time-element';
+import type { IGame } from '@/types/game'
+
+const { game } = Astro.props as { game: IGame }
+---
+
+<article class="flex items-center w-full bg-slate-800 border-slate-700 py-2 px-4 justify-between border">
+    <div>
+        <h4>{game.name}</h4>
+        <p class="text-[#a79a83]">Turnos jugados: {game.turnsPlayed}</p>
+    </div>
+
+    <div>
+        <p>Jugadores: {game.players?.length ?? 0}</p>
+    </div>
+</article>

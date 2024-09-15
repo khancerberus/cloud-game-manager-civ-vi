@@ -20,6 +20,9 @@ importers:
       '@astrojs/vercel':
         specifier: ^7.8.0
         version: 7.8.0(astro@4.15.2(@types/node@22.5.2)(rollup@4.21.2)(typescript@5.5.4))(react@18.3.1)
+      '@github/relative-time-element':
+        specifier: ^4.4.3
+        version: 4.4.3
       '@types/react':
         specifier: ^18.3.5
         version: 18.3.5
@@ -393,6 +396,9 @@ packages:
     engines: {node: '>=12'}
     cpu: [x64]
     os: [win32]
+
+  '@github/relative-time-element@4.4.3':
+    resolution: {integrity: sha512-EVKokqx9/DdUAZ2l9WVyY51EtRCO2gQWWMvsRIn7r4glJ91q9CXcnILVHZVCpfD52ucXUhUvtYsAjNJ4qP4uIg==}
 
   '@img/sharp-darwin-arm64@0.33.5':
     resolution: {integrity: sha512-UT4p+iz/2H4twwAoLCqfA9UH5pI6DggwKEGuaPy7nCVQ8ZsiY5PIcrRvD1DzuY3qYL07NtIQcWnBSY/heikIFQ==}
@@ -2982,6 +2988,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.21.5':
     optional: true
+
+  '@github/relative-time-element@4.4.3': {}
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:

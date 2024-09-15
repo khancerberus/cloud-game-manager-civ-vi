@@ -1,4 +1,10 @@
-import type { ForeignKey, HasManyAddAssociationMixin, Model, NonAttribute } from 'sequelize'
+import type {
+    BelongsToMany,
+    ForeignKey,
+    HasManyAddAssociationMixin,
+    Model,
+    NonAttribute
+} from 'sequelize'
 import type { IPlayer } from './player'
 
 export interface IGame extends Model {
@@ -11,6 +17,4 @@ export interface IGame extends Model {
 
     players?: NonAttribute<IPlayer[]>
     currentPlayerId?: ForeignKey<IPlayer['id']>
-
-    addPlayer: HasManyAddAssociationMixin<IPlayer, string>;
 }

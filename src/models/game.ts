@@ -37,4 +37,4 @@ export const Game = sequelize.define<IGame>(
     }
 )
 
-Game.belongsTo(Player, { foreignKey: 'currentPlayerId' })
+Game.belongsTo(Player, { foreignKey: 'currentPlayerId', as: 'currentPlayer' })

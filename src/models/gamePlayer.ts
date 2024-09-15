@@ -1,8 +1,8 @@
 import { sequelize } from '@/lib/sequelize'
-import { Game } from './game'
-import { Player } from './player'
 import { DataTypes } from 'sequelize'
 import type { IGamePlayer } from '@/types/gamePlayer'
+import { Game } from './game'
+import { Player } from './player'
 
 export const GamePlayer = sequelize.define<IGamePlayer>(
     'gamePlayer',
@@ -18,5 +18,5 @@ export const GamePlayer = sequelize.define<IGamePlayer>(
     }
 )
 
-Game.belongsToMany(Player, { through: GamePlayer })
-Player.belongsToMany(Game, { through: GamePlayer })
+Game.belongsToMany(Player, { through: GamePlayer, as: 'players' })
+Player.belongsToMany(Game, { through: GamePlayer, as: 'games'})

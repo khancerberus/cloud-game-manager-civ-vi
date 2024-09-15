@@ -1,7 +1,5 @@
 // import { sequelize } from '@/lib/sequelize'
-import { Game } from '@/models/game'
-import { GamePlayer } from '@/models/gamePlayer'
-import { Player } from '@/models/player'
+import { Game, GamePlayer, Player } from '@/models'
 import type { APIRoute } from 'astro'
 
 const DS_WEBHOOK_URL = import.meta.env.DS_WEBHOOK_URL ?? ''
@@ -39,6 +37,19 @@ export const POST: APIRoute = async ({ request }) => {
         .json()
         .then(async (data) => {
             let { value1: gameName, value2: playerName, value3: playerTurn } = data
+            if (!gameName || !playerName || !playerTurn) {
+                return new Response(
+                    JSON.stringify({
+                        message: 'Missing data!'
+                    }),
+                    {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        status: 400
+                    }
+                )
+            }
 
             let game = await Game.findOne({
                 where: {

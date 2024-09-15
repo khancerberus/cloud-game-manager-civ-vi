@@ -1,35 +1,52 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Table from '../components/Table.astro'
+import { GET } from './api/game'
+import Game from '@/components/Game.astro'
+import type { IGame } from '@/types/game'
 
-const testDate = new Date('2024-09-03T01:15:00Z')
-
-const games = [
-    {
-        gameName: 'Game 1',
-        players: [
-            {
-                playerId: '72ed82b0-7955-4eb9-a7cc-f882d24d177a',
-                playerName: 'Pelao',
-                discordId: 523998904912707600n
-            }
-        ],
-        turnNumber: 1,
-        lastTurnDate: testDate,
-        totalSeconds: 0,
-        finished: false
-    }
-]
+const response = await GET(Astro)
+const games: IGame[] = await response.json()
 ---
 
 <Layout title="Welcome to Astro.">
-    <main class="flex flex-col justify-center px-5">
+    <main class="flex flex-col justify-center items-center px-5 gap-5">
         <header class="flex flex-col justify-center items-center p-5">
             <h1 class="font-bold">Cloud Game Manager</h1>
             <h2 class="font-bold text-gradient">Civilizations VI</h2>
         </header>
 
-        <Table value={games} />
+        <section class="flex flex-col min-w-[40rem]">
+            <h4 class="px-4 py-2">Juegos Activos</h4>
+            <div class="flex flex-col gap-2">
+                {games.find(game => game.finished) && (
+                    <article class="flex items-center w-full bg-slate-800 border-slate-700 py-2 px-4 justify-between border">
+                        <div>
+                            <h4 class="text-[#9d95d3]">No hay juegos activos</h4>
+                        </div>
+                    </article>
+                )}
+                {games.filter(game => !game.finished).map(game => (
+                    <Game game={game} />
+                ))}
+            </div>
+        </section>
+
+        <section class="flex flex-col min-w-[40rem]">
+            <h4 class="px-4 py-2">Juegos Finalizados</h4>
+            <div>
+                {games.find(game => !game.finished) && (
+                    <article class="flex items-center w-full bg-slate-800 border-slate-700 py-2 px-4 justify-between border">
+                        <div>
+                            <h4 class="text-[#9d95d3]">No hay juegos finalizados</h4>
+                        </div>
+                    </article>
+                )}
+                {games.filter(game => game.finished).map(game => (
+                    <Game game={game} />
+                ))}
+            </div>
+        </section>
     </main>
 </Layout>
 

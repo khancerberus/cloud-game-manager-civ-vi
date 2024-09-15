@@ -1,0 +1,23 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import { GET } from './api/player'
+import type { IPlayer } from '@/types/player'
+import Player from '@/components/Player.astro'
+
+const response = await GET(Astro)
+const players: IPlayer[] = await response.json()
+---
+
+<Layout title="Player">
+    <main class="flex flex-col items-center p-5 gap-5 w-full h-full relative">
+        <header class="flex flex-col p-2 gap-5 justify-center items-center">
+            <h3>Jugadores disponibles ({players.length})</h3>
+        </header>
+
+        <section class="flex gap-4 flex-wrap bg-slate-800">
+            {players?.map?.((player) => {
+                return <Player player={player} />
+            })}
+        </section>
+    </main>
+</Layout>
