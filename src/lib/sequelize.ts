@@ -26,7 +26,7 @@ async function createDatabaseIfNeeded(databaseUrl: string) {
     }
 
     if (!DATABASE_NAME_PATTERN.test(databaseName)) {
-        throw new Error(`DATABASE_URL contains an unsupported database name: "${databaseName}"`)
+        throw new Error(`DATABASE_URL contains an unsupported database name: "${databaseName}". Allowed characters are letters, numbers, underscores, and hyphens.`)
     }
 
     connectionUrl.pathname = '/postgres'
@@ -55,23 +55,30 @@ export const sequelize = new Sequelize(DATABASE_URL, {
     logging: false
 })
 
-if (DATABASE_AUTO_CREATE) {
-    try {
+async function initializeDatabase() {
+    if (DATABASE_AUTO_CREATE) {
         await createDatabaseIfNeeded(DATABASE_URL)
-    } catch (error) {
-        console.error('Unable to create the database automatically:', error)
     }
-}
 
-try {
     await sequelize.authenticate()
 
     if (DATABASE_AUTO_CREATE) {
         console.warn('DATABASE_AUTO_CREATE is enabled; synchronizing the database schema automatically. Avoid enabling this in production.')
-        await sequelize.sync()
+
+        try {
+            await sequelize.sync()
+        } catch (error) {
+            console.error('Connected to the database, but failed to synchronize the schema automatically:', error)
+            throw error
+        }
     }
 
     console.log('Connection has been established successfully.')
+}
+
+try {
+    await initializeDatabase()
 } catch (error) {
-    console.error('Unable to connect to the database:', error)
+    console.error('Unable to initialize the database:', error)
+    throw error
 }
