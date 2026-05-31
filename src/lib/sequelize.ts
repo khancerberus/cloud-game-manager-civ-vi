@@ -29,11 +29,11 @@ async function createDatabaseIfNeeded(databaseUrl: string) {
         connectionString: connectionUrl.toString()
     })
 
-    await client.connect()
-
     try {
-        const escapedDatabaseName = databaseName.replaceAll('"', '""')
-        await client.query(`CREATE DATABASE "${escapedDatabaseName}"`)
+        await client.connect()
+
+        const quotedDatabaseName = databaseName.replaceAll('"', '""')
+        await client.query(`CREATE DATABASE "${quotedDatabaseName}"`)
     } catch (error: unknown) {
         if (!hasErrorCode(error) || error.code !== '42P04') {
             console.error(`Unable to create database "${databaseName}":`, error)
@@ -54,7 +54,7 @@ try {
     await sequelize.authenticate()
 
     if (DATABASE_AUTO_CREATE) {
-        console.warn('DATABASE_AUTO_CREATE is enabled; synchronizing the database schema automatically.')
+        console.warn('DATABASE_AUTO_CREATE is enabled; synchronizing the database schema automatically. Avoid enabling this in production.')
         await sequelize.sync()
     }
 
