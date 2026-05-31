@@ -3,6 +3,8 @@ import pg from 'pg'
 
 const DATABASE_URL = import.meta.env.DATABASE_URL ?? ''
 const DATABASE_AUTO_CREATE = import.meta.env.DATABASE_AUTO_CREATE === 'true'
+const PG_DUPLICATE_DATABASE = '42P04'
+const DATABASE_NAME_PATTERN = /^[A-Za-z0-9_-]+$/
 
 function getDatabaseName(databaseUrl: string) {
     return new URL(databaseUrl).pathname.replace(/^\//, '')
@@ -23,6 +25,10 @@ async function createDatabaseIfNeeded(databaseUrl: string) {
         return
     }
 
+    if (!DATABASE_NAME_PATTERN.test(databaseName)) {
+        throw new Error(`DATABASE_URL contains an unsupported database name: "${databaseName}"`)
+    }
+
     connectionUrl.pathname = '/postgres'
 
     const client = new pg.Client({
@@ -35,7 +41,7 @@ async function createDatabaseIfNeeded(databaseUrl: string) {
         const quotedDatabaseName = databaseName.replaceAll('"', '""')
         await client.query(`CREATE DATABASE "${quotedDatabaseName}"`)
     } catch (error: unknown) {
-        if (!hasErrorCode(error) || error.code !== '42P04') {
+        if (!hasErrorCode(error) || error.code !== PG_DUPLICATE_DATABASE) {
             console.error(`Unable to create database "${databaseName}":`, error)
             throw error
         }
@@ -49,8 +55,15 @@ export const sequelize = new Sequelize(DATABASE_URL, {
     logging: false
 })
 
+if (DATABASE_AUTO_CREATE) {
+    try {
+        await createDatabaseIfNeeded(DATABASE_URL)
+    } catch (error) {
+        console.error('Unable to create the database automatically:', error)
+    }
+}
+
 try {
-    await createDatabaseIfNeeded(DATABASE_URL)
     await sequelize.authenticate()
 
     if (DATABASE_AUTO_CREATE) {
