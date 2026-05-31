@@ -8,6 +8,10 @@ function getDatabaseName(databaseUrl: string) {
     return new URL(databaseUrl).pathname.replace(/^\//, '')
 }
 
+function hasErrorCode(error: unknown): error is { code?: string } {
+    return typeof error === 'object' && error !== null && 'code' in error
+}
+
 async function createDatabaseIfNeeded(databaseUrl: string) {
     if (!DATABASE_AUTO_CREATE || !databaseUrl) {
         return
@@ -30,8 +34,9 @@ async function createDatabaseIfNeeded(databaseUrl: string) {
     try {
         const escapedDatabaseName = databaseName.replaceAll('"', '""')
         await client.query(`CREATE DATABASE "${escapedDatabaseName}"`)
-    } catch (error: any) {
-        if (error.code !== '42P04') {
+    } catch (error: unknown) {
+        if (!hasErrorCode(error) || error.code !== '42P04') {
+            console.error(`Unable to create database "${databaseName}":`, error)
             throw error
         }
     } finally {
@@ -49,6 +54,7 @@ try {
     await sequelize.authenticate()
 
     if (DATABASE_AUTO_CREATE) {
+        console.warn('DATABASE_AUTO_CREATE is enabled; synchronizing the database schema automatically.')
         await sequelize.sync()
     }
 
