@@ -4,7 +4,7 @@ import pg from 'pg'
 const DATABASE_URL = import.meta.env.DATABASE_URL ?? ''
 const DATABASE_AUTO_CREATE = import.meta.env.DATABASE_AUTO_CREATE === 'true'
 const PG_DUPLICATE_DATABASE = '42P04'
-const DATABASE_NAME_PATTERN = /^[A-Za-z0-9_-]+$/
+const DATABASE_NAME_PATTERN = /^[A-Za-z0-9_]+$/
 
 function getDatabaseName(databaseUrl: string) {
     return new URL(databaseUrl).pathname.replace(/^\//, '')
@@ -26,7 +26,7 @@ async function createDatabaseIfNeeded(databaseUrl: string) {
     }
 
     if (!DATABASE_NAME_PATTERN.test(databaseName)) {
-        throw new Error(`DATABASE_URL contains an unsupported database name: "${databaseName}". Allowed characters are letters, numbers, underscores, and hyphens.`)
+        throw new Error(`DATABASE_URL contains an unsupported database name: "${databaseName}". Allowed characters are letters, numbers, and underscores.`)
     }
 
     connectionUrl.pathname = '/postgres'
